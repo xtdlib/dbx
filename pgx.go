@@ -27,7 +27,15 @@ func Connect(ctx context.Context, connString string) error {
 	return err
 }
 
+func Conn() *pgx.Conn {
+	return conn
+}
+
 func MustConnect(ctx context.Context, connString string) {
+	if connString == "" {
+		connString = "postgres://postgres:password@localhost:5432/testdb"
+	}
+
 	if err := Connect(ctx, connString); err != nil {
 		panic(err)
 	}
